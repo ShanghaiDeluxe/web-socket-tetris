@@ -2,7 +2,7 @@
   "name": "web-socket-tetris",
   "version": "0.0.1",
   "description": "web socket battle tetris",
-  "main": "server.js",
+  "main": "app.js",
   "author": "jicjjang12@gmail.com",
   "dependencies": {
     "body-parser": "^1.14.1",
