@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var ejs = require('ejs');
 
-app.set('views', __dirname + '/app/views');
+app.set('views', __dirname + '/views');
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'html');
 

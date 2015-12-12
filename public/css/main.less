@@ -1,0 +1,58 @@
+@import "../vendor/normalize-less/normalize.less";
+
+a {
+    color: #404040;
+    &:hover, &:active, &:visited, &:link {
+        text-decoration: none;
+        color: #404040;
+    }
+}
+
+input {
+    width: 100%;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+}
+
+body {
+    background: #ededed;
+    div.ink-grid {
+        &.header {
+            header {
+                h1 {
+                    small:before  {
+                        content: "|";
+                        margin: 0 0.5em;
+                        font-size: 1.6em;
+                    }
+                    a {
+                        color: #000;
+                        float:right;
+                        &:after {
+                            content: '';
+                            clear: both;
+                            display: table;
+                        }
+                    }
+                }
+            }
+        }
+        &.container {
+            div.all-100 {
+                width: 100%;
+                margin: 0 auto;
+                @media (min-width: 768px) and (max-width: 1024px) {
+                    width: 45%;
+                }
+                @media (min-width: 1024px) {
+                    width: 33.3%;
+                }
+            }
+        }
+        &.footer {
+            background: #ccc;
+        }
+    }
+}
