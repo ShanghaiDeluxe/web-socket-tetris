@@ -25,5 +25,7 @@ or
 sudo bower install
 ~~~
 ---
-make file:
-```/config/database.js```
+make database setting file (See also database.example.js):
+~~~
+/config/database.js
+~~~
