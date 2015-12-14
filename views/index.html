@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Battle Tetris</title>
+    <meta name="description" content="angular express tetris">
+    <meta name="author" content="jicjjang12">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+
+    <!-- Place favicon.ico and apple-touch-icon(s) here  -->
+
+    <!-- Icons -->
+    <!-- 16x16 -->
+    <link rel="shortcut icon" href="http://jicjjang.github.io/favicon.ico">
+    <!-- 32x32 -->
+    <link rel="shortcut icon" href="http://jicjjang.github.io/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="vendor/html5shiv/dist/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="css/ink-flex.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+
+    <!--[if lt IE 9 ]>
+        <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.1.10/css/ink-ie.min.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <![endif]-->
+
+    <script type="text/javascript" src="js/modernizr.js"></script>
+    <script type="text/javascript">
+        Modernizr.load({
+          test: Modernizr.flexbox,
+          nope : 'http://cdn.ink.sapo.pt/3.1.10/css/ink-legacy.min.css'
+        });
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+
+</head>
+<body ng-app="main" ng-controller="MainController">
+    <div class="ink-grid header">
+        <header class="vertical-space">
+            <h1>Battle Tetris<small>Ver. {{ version }}</small><a href="#">{{ userName }}</a></h1>
+        </header>
+    </div>
+    <div class="ink-grid container">
+        <!--[if lte IE 9 ]>
+        <div class="ink-alert basic" role="alert">
+            <button class="ink-dismiss">&times;</button>
+            <p>
+                <strong>You are using an outdated Internet Explorer version.</strong>
+                Please <a href="http://browsehappy.com/">upgrade to a modern browser</a> to improve your web experience.
+            </p>
+        </div>
+        -->
+        <form>
+            <div class="column-group gutters" ng-hide="gameInitialized">
+                <div class="all-100">
+                    <input type="text" placeholder="Game ID" ng-model="id" />
+                    <a href="#" ng-click="init()">Go</a>
+                </div>
+            </div>
+        </form>
+        <div class="column-group gutters my-board" ng-show="gameInitialized">
+            <div class="all-100">
+                <h2>My Game Board</h2>
+            </div>
+
+            <div class="all-30">
+                <div class="buttons">
+                    <button ng-click="start()" class="button start">Start</button>
+                    <button ng-click="stop()" class="button stop">Stop</button>
+                    <button ng-click="reset()" class="button reset">RESET</button>
+                </div>
+                <ul class="log">
+                    <li ng-repeat="log in duellLog">
+                        Crashed <strong>{{log.rowPlus+1}}</strong>block of player <strong>{{log.player}}</strong>. add other people <strong>{{log.rowPlus}}</strong> lines.
+                    </li>
+                </ul>
+            </div>
+            <div class="all-70">
+                <div class="score-book map">
+                    <canvas id="canvas" width="240" height="480"></canvas>
+                    <div id="game-over" ng-show="gameOver">Game Over</div>
+                </div>
+                <div class="score-book next">
+                    <h3><small>Next:</small></h3>
+                    <img ng-src="{{thumbnails[nextBlock.type]}}" />
+                </div>
+                <div class="score-book score1">
+                    <div class="panel callout text-center">
+                        <h2><small>Score:</small><br/> {{points}}</h2>
+                        <h2><small>Level:</small><br/> {{level}}</h2>
+                        <h3><small>Crush:</small><br/> {{rowCount}}</h3>
+                    </div>
+                </div>
+                <div class="score-book score2">
+                    <div class="panel text-center">
+                        <ul class="no-bullet list-img">
+                            <li ng-repeat="(key, block) in blocksCount">
+                                <img ng-src="{{thumbnails[key]}}" width="25" />
+                                <span>{{block.count}} <small>({{block.count/totalBlockCount * 100 | number:2}}%)</small></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="column-group gutters other-boards">
+            <div class="all-100">
+                <h2>Other Boards</h2>
+            </div>
+            <div class="all-100">
+                <ul class="small-block-grid-5" ng-show="users">
+                    <li ng-repeat="user in users" ng-hide="user.name==userName">
+                        <p class="userName">{{user.name}}</p>
+                        <div ng-show="user.game && user.game.field">
+                            <img class="other-field" src="{{user.game.field}}">
+                            <p>
+                                <small>P:</small> {{user.game.points}}
+                                <br>
+                                <small>L:</small> {{user.game.level}}
+                                <br>
+                                <small>R:</small> {{user.game.rowCount}}
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="column-group gutters">
+            <div class="all-100">
+                <div class="medium-6 columns">
+                    <h2>Highscore</h2>
+                    <ol>
+                        <li ng-repeat="score in scores">
+                            <h4><small>rank {{ $index+1 }}, </small>{{score.score}}<small>, name:</small>{{score.name}}</h4>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>   
+    </div>
+    <div class="ink-grid footer">
+        <footer class="clearfix">
+            <div class="ink-grid">
+                <ul class="unstyled inline half-vertical-space">
+                    <li class="active"><a href="https://github.com/ShanghaiDeluxe/web-socket-tetris">Github</a></li>
+                    <li><a href="http://jicjjang.github.io">Blog</a></li>
+                </ul>
+                <p class="note">Network programming class A, 1092045 junseok,choi / taeyoung,kim</p>
+            </div>
+        </footer>
+    </div>
+    <script src="vendor/requirejs/require.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: '/',
+            paths: {
+                jquery: 'vendor/jquery/dist/jquery.min',
+                angular: 'vendor/angular/angular.min',
+                angularRoute: 'vendor/angular-route/angular-route.min',
+                easel: 'vendor/easeljs/lib/easeljs-0.8.2.min',
+                socket: 'vendor/socket.io-client/socket.io'
+            },
+            shim: {
+                'angular': {
+                    exports: 'angular'
+                }
+            },
+            deps: ['js/controllers/MainController']
+        });
+    </script>
+    <!--[if lt IE 9]>
+        <script src="vendor/respond/dest/respond.min.js"></script>
+    <![endif]-->
+</body>
+</html>
