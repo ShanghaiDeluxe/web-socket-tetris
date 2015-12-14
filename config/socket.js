@@ -8,8 +8,9 @@ module.exports = function (io, users) {
         console.log('user connected');
         socket.on('player join', function (player) {
             if (!users[player.name]) {
-                socket.name = player.name;
-                if (!socket.name) {
+                if (socket.name) {
+                    socket.name = player.name;
+                } else {
                     //fn(false);
                     users[player.name] = player;
                     socket.name = player.name;
