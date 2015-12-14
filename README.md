@@ -5,7 +5,7 @@ Hansung univ. network programming class A - junseok, choi / taeyoungm, kim
 
 Procfile -> heroku deploy command file
   
-## Deploy
+## Run
 ---
 npm
 ~~~
@@ -25,3 +25,5 @@ or
 sudo bower install
 ~~~
 ---
+make file:
+```/config/database.js```
