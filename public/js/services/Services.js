@@ -3,10 +3,10 @@ define([
     'angular',
     'js/services/Settings',
     'js/services/Figures'
-], function ($, ng) {
+], function ($) {
     'use strict';
     
-    return ng.module('Services', [
+    return angular.module('Services', [
         'Settings',
         'Figures'
     ])

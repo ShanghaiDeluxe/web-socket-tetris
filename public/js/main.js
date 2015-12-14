@@ -3,9 +3,9 @@ define([
     'js/services/Logics',
     'js/services/Settings',
     'js/services/Figures',
-    'js/services/Services',
-], function (ng) {
+    'js/services/Services'
+], function () {
     'use strict';
 
-    return ng.module('main', ['Logics', 'Settings', 'Figures', 'Services']);
+    return angular.module('main', ['Logics', 'Settings', 'Figures', 'Services']);
 });

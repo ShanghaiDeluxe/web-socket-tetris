@@ -1,10 +1,10 @@
 define([
     'jquery',
     'angular'
-], function ($, ng) {
+], function ($) {
     'use strict';
     
-    return ng.module('Settings', [])
+    return angular.module('Settings', [])
 
     .value('Shapes', {
         I: [
@@ -195,12 +195,12 @@ define([
     .value('FIELD_SIZE', [10, 20])
 
     .value('Colors', {
-        I: "#000099",
-        X: "#999999",
-        P: "#009900",
-        L: "#990000",
-        T: "#009999",
-        S: "#999900",
-        Z: "#990099"
+        I: "#DAB6C4",
+        X: "#F4D06F",
+        P: "#0042C6",
+        L: "#291F1E",
+        T: "#F64740",
+        S: "#4E407C",
+        Z: "#A3333D"
     });
 });

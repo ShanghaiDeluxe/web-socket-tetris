@@ -1,10 +1,10 @@
 define([
     'jquery',
     'angular'
-], function ($, ng) {
+], function ($) {
     'use strict';
     
-    return ng.module('Logics', [])
+    return angular.module('Logics', [])
 
     .service('PointsService', function () {
         return {

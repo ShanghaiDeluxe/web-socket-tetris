@@ -2,17 +2,17 @@ define([
     'jquery',
     'angular',
     'js/services/Settings',
-], function ($, ng) {
+], function ($) {
     'use strict';
     
-    return ng.module('Figures', [
+    return angular.module('Figures', [
         'Settings'
     ])
 
     .service('DrawService', function (Shapes, FIELD_UNIT_SIZE) {
         return {
             drawBlock: function(object) {
-                var borderColor = object.borderColor || '#333333';
+                var borderColor = object.borderColor || '#ededed';
                 var block = object.block;
                 var blockSize = object.blockSize || FIELD_UNIT_SIZE;
                 var stage = object.stage;
@@ -40,12 +40,12 @@ define([
 
                 for (var i = 0; i < fieldDimension[1]; i++) {
                     for (var j = 0; j < fieldDimension[0]; j++) {
-                        fillColor = "#ffffff";
+                        fillColor = "#ddd";
                         if (fieldValues[i][j]) {
                             fillColor = fieldValues[i][j].color;
                         }
                         rect = new createjs.Shape();
-                        rect.graphics.beginStroke("#cccccc");
+                        rect.graphics.beginStroke("#ededed");
                         rect.graphics.beginFill(fillColor);
                         rect.graphics.drawRect(FIELD_UNIT_SIZE * j, FIELD_UNIT_SIZE * i, FIELD_UNIT_SIZE, FIELD_UNIT_SIZE);
                         stage.addChild(rect);
