@@ -5,6 +5,9 @@ Hansung univ. network programming class A - junseok, choi / taeyoungm, kim
 
 Procfile -> heroku deploy command file
   
+##Demo
+https://socket-battle-tetris.herokuapp.com/
+
 ## Run
 ---
 npm
