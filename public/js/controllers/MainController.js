@@ -58,6 +58,10 @@ define([
             if (!$scope.id) {
                 return;
             }
+            if ($scope.id.length > 10) {
+                alert("글자수는 10글자 미만으로 해주세요.");
+                return false;
+            }
             for (var id in $scope.users) {
                 if ($scope.id === id) {
                     alert("동일 아이디 사용자가 있습니다.");
